@@ -1,71 +1,78 @@
 package edu.agh.to.fixit.model;
 
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Choice {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @Column
     private String name;
+    @ManyToMany(cascade=CascadeType.ALL)
+    private Set<Item> items = new HashSet<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Choice parentChoice;
+    @OneToMany(mappedBy = "parentChoice")
+    private Set<Choice> subChoices = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<Repair> repairs = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Choice parent;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    private Collection<Choice> choices = new ArrayList<>();
 
 
     public Choice() {}
 
+
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
-    public Choice getParent() {
-        return parent;
+    public Set<Item> getItems() {
+        return items;
+    }
+    public void setItems(Set<Item> items) {
+        this.items = items;
     }
 
-    public void setParent(Choice parent) {
-        this.parent = parent;
+    public Set<Choice> getSubChoices() {
+        return subChoices;
     }
 
-    public Collection<Choice> getChoices() {
-        return choices;
+    public Choice getParentChoice() {
+        return parentChoice;
     }
 
-    public void setChoices(Collection<Choice> choices) {
-        this.choices = choices;
+    public void setParentChoice(Choice parentChoice) {
+        this.parentChoice = parentChoice;
     }
 
+    public void setSubChoices(Set<Choice> subChoices) {
+        this.subChoices = subChoices;
+    }
 
-    public void addSubChoice(Choice choice){
-        choices.add(choice);
-        choice.setParent(this);
+    public Set<Repair> getRepairs() {
+        return repairs;
+    }
+
+    public void setRepairs(Set<Repair> repairs) {
+        this.repairs = repairs;
     }
 
     @Override
     public String toString() {
         return "Choice{" +
-                "parent=" + parent +
-                ", choices=" + choices +
                 ", name='" + name + '\'' +
                 ", id=" + id +
                 '}';

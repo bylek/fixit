@@ -24,15 +24,30 @@ public class BaseDao<E> implements CrudDao<E> {
 
     @Override
     public void add(E entity){
-        currentSession().save(entity);
+
+        Session session = currentSession();
+        session.beginTransaction();
+        session.save(entity);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override
     public void update(E entity) {
+        Session session = currentSession();
+        session.beginTransaction();
+        session.update(entity);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override
     public void remove(E entity) {
+        Session session = currentSession();
+        session.beginTransaction();
+        session.delete(entity);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override

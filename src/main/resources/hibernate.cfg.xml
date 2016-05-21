@@ -18,6 +18,8 @@
 
         <!--entity classes-->
         <mapping class="edu.agh.to.fixit.model.Choice"/>
+        <mapping class="edu.agh.to.fixit.model.Item"/>
+        <mapping class="edu.agh.to.fixit.model.Repair" />
 
 
 
