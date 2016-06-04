@@ -1,6 +1,6 @@
-FROM tomcat
+FROM tomcat:8-jre8
 
-ADD fixit-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/
+RUN ["rm", "-fr", "/usr/local/tomcat/webapps/ROOT"]
+COPY build/libs/fixit-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/
 
-EXPOSE 8080
 CMD ["catalina.sh", "run"]
