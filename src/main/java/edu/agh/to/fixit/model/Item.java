@@ -1,5 +1,7 @@
 package edu.agh.to.fixit.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 @Entity
@@ -8,6 +10,8 @@ public class Item {
     private int id;
     private String name;
     private String type;
+
+    @JsonIgnore
     private Set<Choice> choices;
 
     public Item(){

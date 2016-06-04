@@ -30,9 +30,6 @@ public class ChoiceService {
     public void saveChoice(Choice choice) {
         choiceRepository.add(choice);
     }
-    public void saveItem(Item item){
-        itemRepository.add(item);
-    }
 
     public void updateChoice(Choice choice){
         choiceRepository.update(choice);
@@ -40,5 +37,9 @@ public class ChoiceService {
 
     public void deleteChoice(Choice choice) {
         choiceRepository.remove(choice);
+    }
+
+    public Choice getChoice(Long choiceId) {
+        return choiceRepository.find(choiceId);
     }
 }

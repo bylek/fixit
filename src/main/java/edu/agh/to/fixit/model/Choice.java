@@ -1,6 +1,8 @@
 package edu.agh.to.fixit.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,7 +11,7 @@ import java.util.Set;
 public class Choice {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Column
     private String name;
     @ManyToMany(cascade=CascadeType.ALL)
@@ -17,6 +19,7 @@ public class Choice {
     @ManyToOne(cascade = CascadeType.ALL)
     private Choice parentChoice;
     @OneToMany(mappedBy = "parentChoice")
+    @JsonIgnore
     private Set<Choice> subChoices = new HashSet<>();
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Repair> repairs = new HashSet<>();
@@ -27,10 +30,10 @@ public class Choice {
     public Choice() {}
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getName() {

@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 public class BaseDao<E> implements CrudDao<E> {
@@ -36,7 +37,7 @@ public class BaseDao<E> implements CrudDao<E> {
     public void update(E entity) {
         Session session = currentSession();
         session.beginTransaction();
-        session.update(entity);
+        session.merge(entity);
         session.getTransaction().commit();
         session.close();
     }
@@ -52,7 +53,12 @@ public class BaseDao<E> implements CrudDao<E> {
 
     @Override
     public E find(Long key) {
-        return null;
+        Class<E> currentClass = (Class<E>)
+                ((ParameterizedType)getClass()
+                        .getGenericSuperclass())
+                        .getActualTypeArguments()[0];
+
+      return  (E)currentSession().get(currentClass,key);
     }
 
     @Override
